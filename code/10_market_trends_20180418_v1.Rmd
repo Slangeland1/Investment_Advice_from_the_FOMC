@@ -1,0 +1,543 @@
+---
+title: 'Market Trends' 
+author: Stephanie Langeland
+always_allow_html: yes
+output:
+  html_document:
+    keep_md: true
+    toc: true
+    number_sections: true
+---
+
+# File Info
+
+Date: 04-18-2017
+
+Author: Stephanie Langeland
+
+File Name: `10_market_trends_20180418_v1.Rmd`
+
+Version: 78
+
+Previous Version/File: `10_market_trends_20180411_v1.Rmd`
+
+Dependencies: None
+
+Purpose:
+
+  1) Explore open vs. close data and intraday data on FOMC and non-FOMC dates.
+  
+  2) Decide whether to use open vs. close and/or intraday data as response 
+  variables in the final LDA model.
+
+Input File(s):
+
+  * `open_close_data.rds`
+
+  * `cla_intraday.rds`
+
+  * `ct10govt_intraday.rds`
+  
+  * `spx_intraday.rds`
+  
+  * `ussoc_intraday.rds`
+  
+  * `vix_intraday.rds`
+  
+Output File(s): `/code/market_trends_images/`
+
+Data Output: None
+
+Required by: QMSS Master's Thesis
+
+Status: Complete
+
+Machine: 2018 MacBook Pro
+
+R version: `r {c( R.Version()$version.string, R.Version()$nickname)}`
+
+```{r Setup, include = FALSE, results = 'hide', warning = FALSE}
+#install.packages('knitr')
+library(knitr)
+opts_chunk$set(fig.path = '10_market_trends_images/',
+               cache.path = 'cache/',
+               cache = FALSE,
+               echo = TRUE,
+               message = FALSE,
+               warning = FALSE
+)
+```
+
+# Open and Close Data
+
+```{r, results = "hide"}
+## :::::::::::::::::::: Import Open and Close Data:
+options(scipen = 999)
+
+oc_data <- readRDS("/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/input_output_files/open_close_data.rds")
+
+str(oc_data)
+
+##View(oc_data)
+
+## :::::::::::::::::::: Add Recession Dates:
+oc_data$recession_date <- ifelse(
+  oc_data$release_date > "2001-03-01" &
+    oc_data$release_date < "2001-11-01" ,
+  Inf,
+  0
+)
+
+oc_data$recession_date <- ifelse(
+  oc_data$release_date > "2007-12-01" &
+    oc_data$release_date < "2009-06-01" ,
+  Inf,
+  oc_data$recession_date
+)
+
+
+
+## :::::::::::::::::::: Create subsets of the dataset - FOMC release dates vs. non-release dates
+library(dplyr)
+
+releases_sub <- oc_data %>%
+  filter(
+    !is.na(stmt_text) |
+    !is.na(min_text)
+  )
+
+no_releases_sub <- oc_data %>%
+  filter(
+    is.na(stmt_text) &
+    is.na(min_text)
+  )
+```
+
+## U.S. corporate credit spread (BICLB10Y) - last price only
+
+```{r "U.S. Corporate Credit Spread on FOMC vs. Non-FOMC Dates", warning = FALSE, message = FALSE}
+## :::::::::::::::::::: Plot:
+library(ggplot2)
+
+spread_plot <- ggplot() +
+  geom_area(aes(x = oc_data$release_date,
+                y = oc_data$recession_date,
+                alpha = 0.05),
+            fill = "gray83",
+            show.legend = F) +
+  geom_point(aes(x = no_releases_sub$release_date,
+                y = no_releases_sub$BICLB10Y_LAST_PRICE,
+                color = "Non-FOMC Dates"
+                )) +
+  geom_point(aes(x = no_releases_sub$release_date,
+                y = no_releases_sub$BICLB10Y_LAST_PRICE,
+                color = "Non-FOMC Dates",
+                text = paste("Non-FOMC Date: ",
+                                as.character(no_releases_sub$release_date),
+                                "\n",
+                                "U.S. corporate credit spread (last price): ",
+                                no_releases_sub$BICLB10Y_LAST_PRICE)),
+             size = 0.9) +
+  geom_point(aes(x = releases_sub$release_date,
+                y = releases_sub$BICLB10Y_LAST_PRICE,
+                color = "FOMC Dates",
+                text = paste("FOMC Meeting Materials Release Date: ",
+                                as.character(releases_sub$release_date),
+                                "\n",
+                                "U.S. corporate credit spread (last price): ",
+                                releases_sub$BICLB10Y_LAST_PRICE))) +
+  labs(title = "U.S. Corporate Credit Spread on FOMC vs. Non-FOMC Dates",
+       x = "Date",
+       y = "U.S. Corporate Credit Spread") +
+  scale_colour_manual("Legend", 
+                      breaks = c("FOMC Dates", 
+                                 "Non-FOMC Dates"),
+                      values = c("magenta1", "gray45")) +
+  theme(
+    panel.border = element_rect(fill = NA),
+    panel.background = element_rect(fill = "white"),
+    panel.grid.major = element_line(colour = "gray",
+                                    size = 0.25),
+    panel.grid.minor = element_line(colour = "gray",
+                                    size = 0.25)
+  ) 
+
+spread_plot
+```
+
+__Interactive Plot:__
+
+```{r fig.height = 7, fig.width = 15, warning = FALSE, message = FALSE}
+library(plotly)
+
+ggplotly(spread_plot,
+         tooltip = c("text"))
+```
+
+```{r}
+## :::::::::::::::::::: Tables:
+mean(releases_sub$BICLB10Y_LAST_PRICE, 
+     na.rm = T) ## mean on FOMC dates
+
+mean(no_releases_sub$BICLB10Y_LAST_PRICE, 
+     na.rm = T) ## mean on non-FOMC dates
+```
+
+Notes: Average U.S. corporate credit spread is higher on release days.
+
+## 10-year constant maturity rate (H15T10Y)
+
+```{r, message = FALSE, warning = FALSE}
+library(QMSS)
+
+Tab(releases_sub$H15T10Y_change_cat)  ## FOMC dates
+
+Tab(no_releases_sub$H15T10Y_change_cat) ## non-FOMC dates
+```
+
+Notes: Doesn't seem like FOMC releases change the trend at all. 
+
+## S&P 500 Index (SPX Index)
+
+```{r}
+Tab(releases_sub$SPX_change_cat)  ## FOMC dates
+
+Tab(no_releases_sub$SPX_change_cat) ## non-FOMC dates
+```
+
+Notes: Doesn't seem like FOMC releases change the trend at all. 
+
+## 3-month U.S. overnight index swap rate (USSOC Currency)
+
+```{r}
+Tab(releases_sub$USSOC_change_cat)  ## FOMC dates
+
+Tab(no_releases_sub$USSOC_change_cat) ## non-FOMC dates
+```
+
+Notes: Doesn't seem like FOMC releases change the trend at all. 
+
+## CBOE VIX Index (VIX) 
+
+```{r}
+Tab(releases_sub$VIX_change_cat)  ## FOMC dates
+
+Tab(no_releases_sub$VIX_change_cat) ## non-FOMC dates
+```
+
+Notes: Doesn't seem like FOMC releases change the trend at all. 
+
+## Crude oil price (CLA Comdty)
+
+```{r}
+Tab(releases_sub$CLAComdty_change_cat)  ## FOMC dates
+
+Tab(no_releases_sub$CLAComdty_change_cat) ## non-FOMC dates
+```
+
+Notes: 
+
+  * Never 0 (no volatility in the 3-month U.S. overnight index swap rate) on FOMC dates
+  
+  * 3-month U.S. overnight index swap rate usually goes down on FOMC dates so the fed might calm markets - could
+  indicate successful transparency because they don't disrupt the market too much.  The opposite
+  is true overall on non-FOMC dates.
+
+## Moody’s BAA corporate bond yield (MOODCBAA Index) - last price only 
+
+```{r}
+mean(releases_sub$MOODCBAA_LAST_PRICE, na.rm = T)  ## FOMC dates
+
+mean(no_releases_sub$MOODCBAA_LAST_PRICE, na.rm = T) ## non-FOMC dates
+```
+
+Notes: Doesn't seem like FOMC releases change the trend at all.
+
+## CBOE Interest Rate 10-year Treasury Note (^TNX)
+
+```{r}
+Tab(releases_sub$TNX_change_cat)  ## FOMC dates
+
+Tab(no_releases_sub$TNX_change_cat) ## non-FOMC dates
+```
+
+Notes: T-bill rate usually goes up on FOMC dates but it usually go down overall
+on non-FOMC dates.  Historically, they've lowered rates more than they've lowered
+them during the sample period:
+    
+```{r}
+Tab(oc_data$TNX_change_cat)
+```
+    
+# Intraday Data 
+
+## S&P 500 Index (SPX Index)
+
+```{r, results = "hide"}
+spx <- readRDS("/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/input_output_files/spx_intraday.rds")
+
+str(spx)
+
+releases_spx_sub <- spx %>%
+  filter(
+    !is.na(type) |
+    !is.na(type)
+  )
+
+releases_spx_sub <- na.omit(releases_spx_sub)
+
+no_releases_spx_sub <- spx %>%
+  filter(
+    is.na(type) &
+    is.na(type)
+  )
+```
+
+```{r}
+spx_rel <- colMeans(releases_spx_sub[, 5:62],
+                     na.rm = T) ## fomc dates
+
+#spx_rel
+
+spx_norel <- colMeans(no_releases_spx_sub[, 5:62],
+                       na.rm = T) ## non-fomc dates
+
+#spx_norel 
+```
+
+```{r "Intraday SPX"}
+plot(spx_rel,
+     type = "p",
+     col = "red",
+     ylab = "")
+
+par(new = TRUE)
+
+plot(spx_norel,
+     type = "l",
+     col = "black")
+```
+
+Notes: Doesn't look like there's a difference in the 2 trends.
+
+## 3-month U.S. overnight index swap rate (USSOC Currency)
+
+```{r, results = "hide"}
+ussoc <- readRDS("/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/input_output_files/ussoc_intraday.rds")
+
+str(ussoc)
+
+#View(ussoc)
+
+releases_ussoc_sub <- ussoc %>%
+  filter(
+    !is.na(type) |
+    !is.na(type)
+  )
+
+releases_ussoc_sub <- na.omit(releases_ussoc_sub)
+
+##View(releases_ussoc_sub)
+
+no_releases_ussoc_sub <- ussoc %>%
+  filter(
+    is.na(type) &
+    is.na(type)
+  )
+
+#View(no_releases_ussoc_sub)
+```
+
+```{r}
+ussoc_rel <- colMeans(releases_ussoc_sub[, 5:90],
+                       na.rm = T) ## fomc dates
+
+#ussoc_rel
+
+ussoc_norel <-colMeans(no_releases_ussoc_sub[, 5:90],
+                       na.rm = T) ## non-fomc dates
+
+#ussoc_norel
+```
+
+```{r "Intraday USSOC"}
+plot(ussoc_rel,
+     type = "p",
+     col = "red",
+     ylab = "")
+
+par(new = TRUE)
+
+plot(ussoc_norel,
+     type = "l",
+     col = "black")
+```
+
+Notes: A little bit of a difference in trend.
+
+## CBOE VIX Index (VIX) 
+
+```{r, results = "hide"}
+vix <- readRDS("/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/input_output_files/vix_intraday.rds")
+
+str(vix)
+
+#View(vix)
+
+releases_vix_sub <- vix %>%
+  filter(
+    !is.na(type) |
+    !is.na(type)
+  )
+
+releases_vix_sub <- na.omit(releases_vix_sub)
+
+#View(releases_vix_sub)
+
+no_releases_vix_sub <- vix %>%
+  filter(
+    is.na(type) &
+    is.na(type)
+  )
+
+#View(no_releases_vix_sub)
+```
+
+```{r}
+vix_rel <- colMeans(releases_vix_sub[, 5:34],
+                       na.rm = T) ## fomc dates
+
+#vix_rel
+
+vix_norel <- colMeans(no_releases_vix_sub[, 5:34],
+                       na.rm = T) ## non-fomc dates
+
+#vix_norel
+```
+
+```{r "Intraday VIX"}
+plot(vix_rel,
+     type = "p",
+     col = "red",
+     ylab = "")
+
+par(new = TRUE)
+
+plot(vix_norel,
+     type = "l",
+     col = "black")
+```
+
+Notes: Little bit of a difference in trend - release dates are trending lower.
+
+## Crude oil price (CLA Comdty)
+
+```{r, results = "hide"}
+cla <- readRDS("/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/input_output_files/cla_intraday.rds")
+
+str(cla)
+
+#View(cla)
+
+releases_cla_sub <- cla %>%
+  filter(
+    !is.na(type) |
+    !is.na(type)
+  )
+
+releases_cla_sub <- na.omit(releases_cla_sub)
+
+#View(releases_cla_sub)
+
+no_releases_cla_sub <- cla %>%
+  filter(
+    is.na(type) &
+    is.na(type)
+  )
+
+#View(no_releases_cla_sub)
+```
+
+```{r}
+cla_rel <- colMeans(releases_cla_sub[, 5:41],
+                       na.rm = T) ## fomc dates
+
+#cla_rel
+
+cla_norel <- colMeans(no_releases_cla_sub[, 5:41],
+                       na.rm = T) ## non-fomc dates
+
+#cla_norel
+```
+
+```{r "Intraday CLA Comodty"}
+plot(cla_rel,
+     type = "p",
+     col = "red",
+     ylab = "")
+
+par(new = TRUE)
+
+plot(cla_norel,
+     type = "l",
+     col = "black")
+```
+
+Notes: Little bit of a difference in trend - release dates are trending higher.
+
+## 10-year Treasury yield (CT10 Govt)
+
+```{r, results = "hide"}
+ct10 <- readRDS("/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/input_output_files/ct10govt_intraday.rds")
+
+str(ct10)
+
+#View(ct10)
+
+releases_ct10_sub <- ct10 %>%
+  filter(
+    !is.na(type) |
+    !is.na(type)
+  )
+
+releases_ct10_sub <- na.omit(releases_ct10_sub)
+
+#View(releases_ct10_sub)
+
+no_releases_ct10_sub <- ct10 %>%
+  filter(
+    is.na(type) &
+    is.na(type)
+  )
+
+#View(no_releases_ct10_sub)
+```
+
+```{r}
+ct10_rel <- colMeans(releases_ct10_sub[, 5:90],
+                       na.rm = T) ## fomc dates
+
+#ct10_rel
+
+ct10_norel <- colMeans(no_releases_ct10_sub[, 5:90],
+                       na.rm = T) ## non-fomc dates
+
+#ct10_norel
+```
+
+```{r "Intraday CT10 GOVT"}
+plot(ct10_rel,
+     type = "p",
+     col = "red",
+     ylab = "")
+
+par(new = TRUE)
+
+plot(ct10_norel,
+     type = "l",
+     col = "black")
+```
+
+Notes: Doesn't look like there's a difference in the 2 trends.
+
+# Conclusion: Only use open vs. close data in the final LDA model.

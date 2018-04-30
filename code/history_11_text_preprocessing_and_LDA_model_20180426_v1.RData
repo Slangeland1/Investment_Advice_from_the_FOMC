@@ -1,0 +1,512 @@
+library(ggplot2)
+overall_direction + ggtitle(test)
+overall_direction + ggtitle("test")
+?title
+overall_direction + title("Test")
+overall_direction
+title("Test")
+overall_direction
+title(main = "Test")
+title(main = "Test")
+overall_direction
+overall_direction <- table(
+observed = sign(as.matrix(response_vars_sub) - 1),
+predicted = sign(colMeans(post_mat_Y_tilde) - 1), main = "test"
+)
+?ggtitlw
+?ggtitle
+?lans
+?labs
+"Test"
+overall_direction
+overall_direction "Test"
+paste("Test",
+overall_direction)
+overall_direction + "Test"
+overall_direction + c("Test")
+overall_direction + main("Test")
+overall_direction + main="Test"
+paste("overall_direction")
+overall_direction
+overall_direction + paste("overall_direction")
+?table
+library(knitr)
+kable(overall_direction)
+kable(overall_direction, title = "test")
+?kable
+kable(overall_direction, caption = "test")
+kable(overall_direction, title = "test")
+kable)(
+kable(
+overall_direction,
+title = "Overall"
+)
+kable(
+overall_direction,
+format = "html",
+title = "Overall"
+)
+kable(
+overall_direction,
+format = "latex",
+title = "Overall"
+)
+kable(
+overall_direction,
+title = "Overall"
+)
+kable(
+H15T10Y_direction,
+title = "H15T10Y_direction"
+)
+kable(
+SPX_direction,
+title = "SPX_direction"
+)
+kable(
+TNX_direction,
+title = "TNX_direction"
+)
+kable(
+VIX_direction,
+title = "VIX_direction"
+)
+ggtitle("10Y Constant Maturity Rate (Y) versus Predictions (Yrep)")
+ggtitle("S&P 500 Index (Y) versus Predictions (Yrep)")
+ggtitle("10Y Treasury Note CBOE Interest Rate (Y)\nversus Predictions (Yrep)")
+ggtitle("VIX Index (Y) versus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+)
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability 0.5\nfor 10Y Constant Maturity Rate (Y) versus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability 0.5
+for 10Y Constant Maturity Rate (Y) versus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability 0.5\nfor 10Y Constant Maturity Rate (Y)\nversus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\n0.5for 10Y Constant Maturity Rate (Y)\nversus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\n0.5 for 10Y Constant Maturity Rate (Y)\nversus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\nof 0.5 for 10Y Constant Maturity Rate (Y)\nversus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$SPX_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",2]", ## because colnames(response_vars_sub)[2]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\nof 0.5 for S&P 500 Index (Y)\nversus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$TNX_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",3]", ## because colnames(response_vars_sub)[3]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\nof 0.5 for 10Y Treasury Note CBOE Interest Rate (Y)\nversus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$TNX_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",3]", ## because colnames(response_vars_sub)[3]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\nof 0.5 for 10Y Treasury Note CBOE Interest\nRate (Y)versus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$TNX_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",3]", ## because colnames(response_vars_sub)[3]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\nof 0.5 for 10Y Treasury Note CBOE Interest\nRate (Y) versus Predictions (Yrep)")
+ppc_intervals(y = response_vars_sub$VIX_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",4]", ## because colnames(response_vars_sub)[4]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\nof 0.5 for VIX Index (Y)\nversus Predictions (Yrep)")
+lower <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+mean(response_vars_sub$H15T10Y_close_perc_open > lower_h15 &
+response_vars_sub$H15T10Y_close_perc_open < upper_h15) # overfit
+lower_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)]
+upper_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+mean(response_vars_sub$H15T10Y_close_perc_open > lower_h15 &
+response_vars_sub$H15T10Y_close_perc_open < upper_h15) # overfit
+lower_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+mean(response_vars_sub$H15T10Y_close_perc_open > lower_h15 &
+response_vars_sub$H15T10Y_close_perc_open < upper_h15) # overfit
+##:::::::::::::::::::: Graphical Assessment of Calibration:
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\nof 0.5 for 10Y Constant Maturity Rate (Y)\nversus Predictions (Yrep)")
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+lower_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+mean(response_vars_sub$H15T10Y_close_perc_open > lower_h15 &
+response_vars_sub$H15T10Y_close_perc_open < upper_h15) # overfit
+mean(response_vars_sub$H15T10Y_close_perc_open > lower_h15 &
+response_vars_sub$H15T10Y_close_perc_open < upper_h15)
+h15_fit <- mean(response_vars_sub$H15T10Y_close_perc_open > lower_h15 &
+response_vars_sub$H15T10Y_close_perc_open < upper_h15)
+save.image(file = "/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/code/11_text_preprocessing_and_LDA_model_20180424_v3.RData")
+savehistory(file = "/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/code/history_11_text_preprocessing_and_LDA_model_20180424_v3.RData")
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+h15_fit
+##:::::::::::::::::::: Graphical Assessment of Calibration:
+ppc_intervals(y = response_vars_sub$H15T10Y_close_perc_open,
+yrep = post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+prob = 0.5
+) +
+ggtitle("Posterior Predictive Interval with Probability\nof 0.5 for 10Y Constant Maturity Rate (Y)\nversus Predictions (Yrep)")
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+lower_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_h15 <- apply(
+post_mat_Y_tilde[ ,
+grep(",1]", ## because colnames(response_vars_sub)[1]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+h15_fit <- mean(response_vars_sub$H15T10Y_close_perc_open > lower_h15 &
+response_vars_sub$H15T10Y_close_perc_open < upper_h15)
+h15_fit
+colnames(response_vars_sub)[2]
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+lower_spx <- apply(
+post_mat_Y_tilde[ ,
+grep(",2]", ## because colnames(response_vars_sub)[2]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_spx <- apply(
+post_mat_Y_tilde[ ,
+grep(",2]", ## because colnames(response_vars_sub)[2]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+spx_fit <- mean(response_vars_sub$SPX_close_perc_open > lower_h15 &
+response_vars_sub$SPX_close_perc_open < upper_h15)
+spx_fit
+colnames(response_vars_sub)[3]
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+lower_tnx <- apply(
+post_mat_Y_tilde[ ,
+grep(",3]", ## because colnames(response_vars_sub)[3]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_tnx <- apply(
+post_mat_Y_tilde[ ,
+grep(",3]", ## because colnames(response_vars_sub)[3]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+spx_fit <- mean(response_vars_sub$SPX_close_perc_open > lower_spx &
+response_vars_sub$SPX_close_perc_open < upper_spx)
+spx_fit
+spx_fit <- mean(response_vars_sub$SPX_close_perc_open > lower_spx &
+response_vars_sub$SPX_close_perc_open < upper_spx)
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+lower_tnx <- apply(
+post_mat_Y_tilde[ ,
+grep(",3]", ## because colnames(response_vars_sub)[3]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_tnx <- apply(
+post_mat_Y_tilde[ ,
+grep(",3]", ## because colnames(response_vars_sub)[3]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+tnx_fit <- mean(response_vars_sub$TNX_close_perc_open > lower_tnx &
+response_vars_sub$TNX_close_perc_open < upper_tnx)
+tnx_fit
+colnames(response_vars_sub)[3]
+tnx_fit
+colnames(response_vars_sub)[4]
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+lower_vix <- apply(
+post_mat_Y_tilde[ ,
+grep(",4]", ## because colnames(response_vars_sub)[4]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_vix <- apply(
+post_mat_Y_tilde[ ,
+grep(",4]", ## because colnames(response_vars_sub)[4]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+lower_vix <- apply(
+post_mat_Y_tilde[ ,
+grep(",4]", ## because colnames(response_vars_sub)[4]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.25
+)
+upper_vix <- apply(
+post_mat_Y_tilde[ ,
+grep(",4]", ## because colnames(response_vars_sub)[4]
+colnames(post_mat_Y_tilde),
+fixed = TRUE)
+],
+MARGIN = 2,
+quantile,
+probs = 0.75
+)
+vix_fit <- mean(response_vars_sub$VIX_close_perc_open > lower_vix &
+response_vars_sub$VIX_close_perc_open < upper_vix)
+vix_fit
+save.image(file = "/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/code/11_text_preprocessing_and_LDA_model_20180424_v3.RData")
+savehistory(file = "/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/code/history_11_text_preprocessing_and_LDA_model_20180424_v3.RData")
+##:::::::::::::::::::: Numerical Assessment of Calibration:
+##:::::::::::::::::::: Are the predictions within 1 standard deviation of
+##:::::::::::::::::::: `H15T10Y_close_perc_open`?:
+model_residuals_avg_abs_rng_h15 <- ifelse(
+model_residuals_avg_abs$H15T10Y_close_perc_open <= sd(response_vars_sub$H15T10Y_close_perc_open),
+"within_range",
+"out_of_range"
+)
+model_residuals_avg_abs_rng_h15 <- as.data.frame(model_residuals_avg_abs_rng_h15)
+summary(model_residuals_avg_abs_rng_h15)
+##::::::::: Percentage of each variable that was predicted "within range":
+sum(model_residuals_avg_abs_rng_h15 == "within_range") /
+nrow(model_residuals_avg_abs_rng_h15) * 100
+##::::::::: Percentage of each variable that was predicted "within range":
+sum(model_residuals_avg_abs_rng_h15 == "within_range") /
+nrow(model_residuals_avg_abs_rng_h15) * 100
+##::::::::: Percentage of each variable that was predicted "within range":
+rng_h15_pred <- sum(model_residuals_avg_abs_rng_h15 == "within_range") /
+nrow(model_residuals_avg_abs_rng_h15) * 100
+round(rng_h15_pred, digits = 2)
+##::::::::: Percentage of each variable that was predicted "within range":
+rng_spx_pred <- sum(model_residuals_avg_abs_rng_spx == "within_range") /
+nrow(model_residuals_avg_abs_rng_spx) * 100
+round(rng_spx_pred, digits = 2)
+##::::::::: Percentage of each variable that was predicted "within range":
+rng_tnx_pred <- sum(model_residuals_avg_abs_rng_tnx == "within_range") /
+nrow(model_residuals_avg_abs_rng_tnx) * 100
+rng_tnx_pred
+round(rng_tnx_pred, digits = 2)
+##::::::::: Percentage of each variable that was predicted "within range":
+rng_vix_pred <- sum(model_residuals_avg_abs_rng_vix == "within_range") /
+nrow(model_residuals_avg_abs_rng_vix) * 100
+rng_vix_pred
+round(rng_vix_pred, digits = 2)
+rng_h15_pred
+rng_spx_pred
+rng_tnx_pred
+rng_vix_pred
+kable(
+overall_direction,
+title = "Overall"
+)
+kable(
+overall_direction,
+title = "Overall"
+)
+kable(
+H15T10Y_direction,
+title = "H15T10Y_direction"
+)
+H15T10Y_direction
+H15T10Y_direction
+H15T10Y_direction
+SPX_direction
+H15T10Y_direction
+TNX_direction
+VIX_direction
+post
+save.image(file = "/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/code/11_text_preprocessing_and_LDA_model_20180426_v1.RData")
+savehistory(file = "/Users/stephanielangeland/Desktop/Columbia/masters_thesis/Langeland_thesis/code/history_11_text_preprocessing_and_LDA_model_20180426_v1.RData")
